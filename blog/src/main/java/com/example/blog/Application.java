@@ -1,5 +1,6 @@
 package com.example.blog;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,4 +11,7 @@ public class Application {
 		SpringApplication.run(Application.class, args);
 	}
 
+	public ModelMapper modelMapper(){
+		return new ModelMapper();
+	}
 }
