@@ -1,5 +1,6 @@
 package com.example.blog.services;
 
+import com.example.blog.excepttions.BadRequestException;
 import com.example.blog.payloads.UserDto;
 
 import java.util.List;

@@ -1,6 +1,7 @@
 package com.example.blog.services.impl;
 
 import com.example.blog.entities.User;
+import com.example.blog.excepttions.BadRequestException;
 import com.example.blog.payloads.UserDto;
 import com.example.blog.repositories.UserRepository;
 import com.example.blog.services.UserService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
