@@ -3,6 +3,7 @@ package com.example.blog.controllers;
 import com.example.blog.payloads.ApiResponse;
 import com.example.blog.payloads.CategoryDto;
 import com.example.blog.services.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,21 +20,21 @@ public class CategoryController {
 
     // create api
     @PostMapping("/")
-    public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryDto categoryDto){
+    public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto){
         CategoryDto createCategory = this.categoryService.createCategory(categoryDto);
         return new ResponseEntity<CategoryDto>(createCategory, HttpStatus.CREATED);
     }
 
     // update api
     @PutMapping("/{categoryId}")
-    public ResponseEntity<CategoryDto> updateCategory(@RequestBody CategoryDto categoryDto, @PathVariable Integer categoryId){
+    public ResponseEntity<CategoryDto> updateCategory(@Valid @RequestBody CategoryDto categoryDto, @PathVariable Integer categoryId){
         CategoryDto updateCategory = this.categoryService.updateCategory(categoryDto, categoryId);
         return new ResponseEntity<CategoryDto>(updateCategory, HttpStatus.OK);
     }
 
     // delete api
     @DeleteMapping("/{categoryId}")
-    public ResponseEntity<ApiResponse> deleteCategory(@RequestBody Integer categoryId){
+    public ResponseEntity<ApiResponse> deleteCategory(@PathVariable Integer categoryId){
         this.categoryService.deleteCategory(categoryId);
         return new ResponseEntity<ApiResponse>(
                 new ApiResponse("Category deleted successfully", true),

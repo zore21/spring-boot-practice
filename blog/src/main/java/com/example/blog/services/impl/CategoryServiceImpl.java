@@ -3,31 +3,34 @@ package com.example.blog.services.impl;
 import com.example.blog.entities.Category;
 import com.example.blog.excepttions.ResourceNotfoundException;
 import com.example.blog.payloads.CategoryDto;
-import com.example.blog.repositories.CategoryRepo;
+import com.example.blog.repositories.CategoryRepository;
 import com.example.blog.services.CategoryService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
-    private CategoryRepo categoryRepo;
+    private CategoryRepository categoryRepo;
 
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
-    public CategoryDto createCategory(CategoryDto categoryDto) {
+    public CategoryDto createCategory(@Valid CategoryDto categoryDto) {
         Category category = this.modelMapper.map(categoryDto, Category.class);
         Category addedCategory = this.categoryRepo.save(category);
         return this.modelMapper.map(addedCategory, CategoryDto.class);
     }
 
     @Override
-    public CategoryDto updateCategory(CategoryDto categoryDto, Integer categoryId) {
+    public CategoryDto updateCategory(@Valid CategoryDto categoryDto, Integer categoryId) {
         Category category = this.categoryRepo.findById(categoryId)
                 .orElseThrow(() ->
                         new ResourceNotfoundException("Category ", "category id ", categoryId));
