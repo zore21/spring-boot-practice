@@ -57,13 +57,24 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post updatePost(PostDto postDto, Integer postId) {
-        return null;
+    public PostDto updatePost(PostDto postDto, Integer postId) {
+        Post post = this.postRepository.findById(postId).orElseThrow(
+                () -> new ResourceNotfoundException("Post", "post id", postId)
+        );
+        post.setPostTitle(postDto.getPostTitle());
+        post.setPostContent(postDto.getPostContent());
+        post.setPostImageName(postDto.getPostImageName());
+
+        Post updatedPost = this.postRepository.save(post);
+        return modelMapper.map(updatedPost, PostDto.class);
     }
 
     @Override
     public void deletePost(Integer postId) {
-
+        Post post = this.postRepository.findById(postId).orElseThrow(
+                () -> new ResourceNotfoundException("Post", "post id", postId)
+        );
+        this.postRepository.delete(post);
     }
 
     @Override

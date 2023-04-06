@@ -1,6 +1,7 @@
 package com.example.blog.controllers;
 
 import com.example.blog.entities.Post;
+import com.example.blog.payloads.ApiResponse;
 import com.example.blog.payloads.PostDto;
 import com.example.blog.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,13 +32,20 @@ public class PostController {
     }
 
     // update posts api
-    @PutMapping("/user/{userId}/category/{categoryId}/posts")
+    @PutMapping("/posts/{postId}")
     public ResponseEntity<PostDto> updatePost(
             @RequestBody PostDto postDto,
-            @PathVariable Integer userId,
-            @PathVariable Integer categoryId
+            @PathVariable Integer postId
     ){
-        return null;
+        PostDto updatePost = this.postService.updatePost(postDto, postId);
+        return new ResponseEntity<PostDto>(postDto, HttpStatus.OK);
+    }
+
+    // delete post
+    @DeleteMapping("/posts/{postId}")
+    public ApiResponse deletePost(@PathVariable Integer postId){
+        this.postService.deletePost(postId);
+        return new ApiResponse("Post deleted successfully", true);
     }
 
     // get posts by users
